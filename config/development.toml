@@ -1,0 +1,5 @@
+node = "$HOSTNAME"
+version = "$SPINE_VERSION"
+
+[request]
+  timeout_ms = 5000
