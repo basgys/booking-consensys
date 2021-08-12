@@ -193,6 +193,7 @@ func (a *App) HandleHTTP(srv *http.Server) {
 	// Add middlewares
 	// Create HTTP handler with middlewares
 	srv.Append(ni.ReturnNodeInfo)
+	srv.Append(mwCORS) // FIXME: Unsafe, but ok for demo purpose
 	srv.Append(store.Inject)
 
 	// Return 200 OK on / for load balancer health check
@@ -223,4 +224,17 @@ func (m *matchAll) Attach(r *mux.Router, f func(nethttp.ResponseWriter, *nethttp
 
 func (m *matchAll) Serve(ctx context.Context, w http.ResponseWriter, r *http.Request) {
 	w.Head(http.StatusNotFound)
+}
+
+func mwCORS(next http.ServeFunc) http.ServeFunc {
+	return func(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Access-Control-Allow-Headers", "*")
+
+		if r.HTTP.Method == "OPTIONS" {
+			w.Head(http.StatusOK)
+			return
+		}
+		next(ctx, w, r)
+	}
 }

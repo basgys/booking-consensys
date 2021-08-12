@@ -1,0 +1,45 @@
+html {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+body, input, button {
+  font-size: clamp(1.1rem, 2vw, 2rem);
+}
+
+.section + .section {
+  margin-top: 4rem;
+}
+
+.app__nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #acacac;
+  padding: 1rem;
+}
+
+.app__nav-items {
+  display: block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.app__nav-item {
+  display: inline-block;
+}
+.app__nav-item + .app__nav-item {
+  margin-left: 2rem;
+}
+
+.app__main {
+  padding: 1rem;
+}
